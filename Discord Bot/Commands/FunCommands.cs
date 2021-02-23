@@ -66,42 +66,82 @@ namespace Discord_Bot.Commands
             await ctx.Channel.SendMessageAsync(message.Result.Emoji);
         }
 
+        #region same problem
+        //[Command("poll")]
+        //[Description("**Голосование/Опрос\n**" +
+        //            "nis [duration] [emoji] [emoji]...\n" +
+        //            "\n" +
+        //            "For example, *nis 20s :pensive: :thumbsup: :champagne_glass:*\n" +
+        //            "!There should be a space between emojis\nМежду смайликами должен быть пробел")]
+        //public async Task Poll(CommandContext ctx, [Description("How long should the poll last.")] TimeSpan duration, [Description("What options should people have.")] params DiscordEmoji[] EmojiOptions)
+        //{
+        //    var interactivity = ctx.Client.GetInteractivity();
+        //    var options = EmojiOptions.Select(xe => xe.ToString());
 
-        [Command ("poll")]
+        //    await ctx.Channel.SendMessageAsync("Введите название для голосования").ConfigureAwait(false);
+        //    var respond = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
+
+        //    // then let's present the poll
+        //    var embed = new DiscordEmbedBuilder
+        //    {
+        //        Title = respond.Result.Content,
+        //    };
+        //    var msg = await ctx.RespondAsync(embed);
+
+
+        //    for (var i = 0; i < EmojiOptions.Length; i++)
+        //        await msg.CreateReactionAsync(EmojiOptions[i]);
+
+        //    var poll_result = await interactivity.CollectReactionsAsync(msg, duration);
+
+        //    var Results = poll_result.Distinct();
+        //    var results = poll_result.Where(xkvp => EmojiOptions.Contains(xkvp.Emoji))
+        //        .Select(xkvp => $"{xkvp.Emoji}: {xkvp.Total}");
+
+        //    await ctx.RespondAsync(string.Join("\n", results));
+        //}
+        #endregion
+
+        #region my poll but it is bad
+        [Command("poll")]
         [Description("**Голосование/Опрос\n**" +
                     "nis [duration] [Title for poll] [emoji] [emoji]...\n" +
                     "\n" +
                     "For example, *nis 20s :pensive: :thumbsup: :champagne_glass:*\n" +
                     "!There should be a space between emojis\nМежду смайликами должен быть пробел")]
-        public async Task Poll(CommandContext ctx, TimeSpan duration, string respond, params DiscordEmoji[] EmojiOptions)
+        public async Task Poll(CommandContext ctx, TimeSpan duration, params DiscordEmoji[] EmojiOptions)
         {
             var interactivity = ctx.Client.GetInteractivity();
 
             var options = EmojiOptions.Select(x => x.ToString());
 
+            await ctx.Channel.SendMessageAsync("Введите название для голосования").ConfigureAwait(false);
+
+            var respond = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
+
             var PollEmbed = new DiscordEmbedBuilder
             {
-                Title = respond,
+                Title = respond.Result.Content,
             };
 
             var PollMessage = await ctx.Channel.SendMessageAsync(embed: PollEmbed).ConfigureAwait(false);
 
-            foreach(var option in EmojiOptions)
+            foreach (var option in EmojiOptions)
             {
                 await PollMessage.CreateReactionAsync(option).ConfigureAwait(false);
             }
+            var result1 = await interactivity.DoPollAsync(PollMessage, EmojiOptions, DSharpPlus.Interactivity.Enums.PollBehaviour =0, duration).ConfigureAwait(false);
+            var Results = result1.Select(x => $"{x.Emoji}: {x.Total}");
 
-            var result = await interactivity.DoPollAsync(PollMessage, EmojiOptions).ConfigureAwait(false);
+            //var result = await interactivity.CollectReactionsAsync(PollMessage,duration).ConfigureAwait(false);
 
-            var distinctResult = result.Distinct();
+            //var Results = result.Distinct();
 
-            System.Threading.Thread.Sleep(200);
+            //var results = result.Select(x => $"{x.Emoji}: {x.Total}");
 
-            var results = distinctResult.Select(x => $"{x.Emoji}: {x.Total}");
-
-            await ctx.Channel.SendMessageAsync(string.Join("\n", results)).ConfigureAwait(false);
+            await ctx.Channel.SendMessageAsync(string.Join("\n", Results)).ConfigureAwait(false);
         }
-
+        #endregion
 
         [Command ("random")]
         [Description( "Выбирает рандомное число из определенного диапозона\n"+
