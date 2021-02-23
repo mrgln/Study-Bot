@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Discord_Bot</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="bin\Debug\netcoreapp3.1\config.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00801" />
+    <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.0-nightly-00801" />
+    <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.0-nightly-00801" />
+  </ItemGroup>
+
+</Project>
