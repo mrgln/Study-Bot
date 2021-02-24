@@ -32,17 +32,6 @@ namespace Discord_Bot.Commands
                 await ctx.Channel.SendMessageAsync("I've lost gg🏓").ConfigureAwait(false);
             else {await ctx.Channel.SendMessageAsync("pong 🏓").ConfigureAwait(false); }
         }
-        
-
-        //[Command("add")]
-        //[Description("Adds two numbers together")]
-        //[RequireRoles(RoleCheckMode.All, "Moderator", "Owner")]
-        //public async Task Add(CommandContext ctx, int numberOne, int numberTwo)
-        //{
-        //    await ctx.Channel
-        //        .SendMessageAsync((numberOne+numberTwo).ToString())
-        //        .ConfigureAwait(false);
-        //}
 
 
         [Command("responsemessage")]
@@ -50,7 +39,7 @@ namespace Discord_Bot.Commands
         {
             var interactivity = ctx.Client.GetInteractivity();
 
-            var message = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel).ConfigureAwait(false);
+            var message = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
 
             await ctx.Channel.SendMessageAsync(message.Result.Content);
         }
@@ -61,54 +50,19 @@ namespace Discord_Bot.Commands
         {
             var interactivity = ctx.Client.GetInteractivity();
 
-            var message = await interactivity.WaitForReactionAsync(x => x.Channel == ctx.Channel).ConfigureAwait(false);
+            var message = await interactivity.WaitForReactionAsync(x => x.Channel == ctx.Channel && x.User.Id == ctx.User.Id).ConfigureAwait(false);
 
             await ctx.Channel.SendMessageAsync(message.Result.Emoji);
         }
 
-        #region same problem
-        //[Command("poll")]
-        //[Description("**Голосование/Опрос\n**" +
-        //            "nis [duration] [emoji] [emoji]...\n" +
-        //            "\n" +
-        //            "For example, *nis 20s :pensive: :thumbsup: :champagne_glass:*\n" +
-        //            "!There should be a space between emojis\nМежду смайликами должен быть пробел")]
-        //public async Task Poll(CommandContext ctx, [Description("How long should the poll last.")] TimeSpan duration, [Description("What options should people have.")] params DiscordEmoji[] EmojiOptions)
-        //{
-        //    var interactivity = ctx.Client.GetInteractivity();
-        //    var options = EmojiOptions.Select(xe => xe.ToString());
 
-        //    await ctx.Channel.SendMessageAsync("Введите название для голосования").ConfigureAwait(false);
-        //    var respond = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
-
-        //    // then let's present the poll
-        //    var embed = new DiscordEmbedBuilder
-        //    {
-        //        Title = respond.Result.Content,
-        //    };
-        //    var msg = await ctx.RespondAsync(embed);
-
-
-        //    for (var i = 0; i < EmojiOptions.Length; i++)
-        //        await msg.CreateReactionAsync(EmojiOptions[i]);
-
-        //    var poll_result = await interactivity.CollectReactionsAsync(msg, duration);
-
-        //    var Results = poll_result.Distinct();
-        //    var results = poll_result.Where(xkvp => EmojiOptions.Contains(xkvp.Emoji))
-        //        .Select(xkvp => $"{xkvp.Emoji}: {xkvp.Total}");
-
-        //    await ctx.RespondAsync(string.Join("\n", results));
-        //}
-        #endregion
-
-        #region my poll but it is bad
         [Command("poll")]
         [Description("**Голосование/Опрос\n**" +
                     "nis [duration] [Title for poll] [emoji] [emoji]...\n" +
                     "\n" +
                     "For example, *nis 20s :pensive: :thumbsup: :champagne_glass:*\n" +
-                    "!There should be a space between emojis\nМежду смайликами должен быть пробел")]
+                    "!There should be a space between emojis\nМежду смайликами должен быть пробел" +
+                    "**На данный момент команда работает некорректно**\n")]
         public async Task Poll(CommandContext ctx, TimeSpan duration, params DiscordEmoji[] EmojiOptions)
         {
             var interactivity = ctx.Client.GetInteractivity();
@@ -130,18 +84,16 @@ namespace Discord_Bot.Commands
             {
                 await PollMessage.CreateReactionAsync(option).ConfigureAwait(false);
             }
-            var result1 = await interactivity.DoPollAsync(PollMessage, EmojiOptions, DSharpPlus.Interactivity.Enums.PollBehaviour =0, duration).ConfigureAwait(false);
-            var Results = result1.Select(x => $"{x.Emoji}: {x.Total}");
 
-            //var result = await interactivity.CollectReactionsAsync(PollMessage,duration).ConfigureAwait(false);
+            var result1 = await interactivity.CollectReactionsAsync(PollMessage, duration).ConfigureAwait(false);
 
-            //var Results = result.Distinct();
+            var results = result1.Distinct();
 
-            //var results = result.Select(x => $"{x.Emoji}: {x.Total}");
+            var Results = results.Select(x => $"{x.Emoji}: {x.Total}");
 
             await ctx.Channel.SendMessageAsync(string.Join("\n", Results)).ConfigureAwait(false);
         }
-        #endregion
+
 
         [Command ("random")]
         [Description( "Выбирает рандомное число из определенного диапозона\n"+

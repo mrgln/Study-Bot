@@ -43,11 +43,12 @@ namespace Discord_Bot.Commands
         {
             string mathcommands = "`add` `min` `mply` `div` `sqrt` `sin` `cos` `tan` `cot` `raise` `avg`";
             string funcommands =  "`ping` `poll` `random`";
-            string schedulecommands = "`9l` `sau` `sat`";
-            string url = "https://wmpics.pics/di-HPNH.jpg";
+            string schedulecommands = "`8[letter]` `9[letter]` `sau` `sat` ";
+            string url = "https://www.vippng.com/png/full/145-1451599_footer-footer-png.png";
 
             _embed.WithColor(DiscordColor.Aquamarine);
             _embed.WithImageUrl(url);
+            _embed.WithDescription("Для информации о каждой команде напишите *nis help <название команды>*");
 
             _embed.WithTitle("Study Bot - simplifies the learning process");
             _embed.AddField("🖩 Math Commands", mathcommands);
