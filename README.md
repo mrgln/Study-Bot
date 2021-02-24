@@ -11,3 +11,4 @@ StudyBot has some features, with **3 categories**:
 
 ## Updates
 There will be more updates with this bot such as, making new *fun* and *schedule* commands!
+ 
