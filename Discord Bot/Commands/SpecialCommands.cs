@@ -47,7 +47,15 @@ namespace Discord_Bot.Commands
                     ImageUrl = "https://cdn1.savepice.ru/uploads/2021/2/24/9e888d852442e9004a2889b69f93dd92-full.png",
                 };
                 var sauMessage = await ctx.Channel.SendMessageAsync(embed: sauEmbed).ConfigureAwait(false);
-
+            }
+            else if (respond.Result.Content == "7")
+            {
+                var sauEmbed = new DiscordEmbedBuilder
+                {
+                    Title = $"Расписание соров для {respond.Result.Content} класса",
+                    ImageUrl = "https://wmpics.pics/di-GXFY.png",
+                };
+                var sauMessage = await ctx.Channel.SendMessageAsync(embed: sauEmbed).ConfigureAwait(false);
             }
             else
             {
