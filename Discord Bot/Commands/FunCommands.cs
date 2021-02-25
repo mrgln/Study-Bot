@@ -58,11 +58,11 @@ namespace Discord_Bot.Commands
 
         [Command("poll")]
         [Description("**Голосование/Опрос\n**" +
-                    "nis [duration] [Title for poll] [emoji] [emoji]...\n" +
+                    "= [duration] [Title for poll] [emoji] [emoji]...\n" +
                     "\n" +
-                    "For example, *nis 20s :pensive: :thumbsup: :champagne_glass:*\n" +
-                    "!There should be a space between emojis\nМежду смайликами должен быть пробел" +
-                    "**На данный момент команда работает некорректно**\n")]
+                    "For example, *= 20s :pensive: :thumbsup: :champagne_glass:*\n" +
+                    //"!There should be a space between emojis\nМежду смайликами должен быть пробел" +
+                    "**!На данный момент команда работает некорректно!**\n")]
         public async Task Poll(CommandContext ctx, TimeSpan duration, params DiscordEmoji[] EmojiOptions)
         {
             var interactivity = ctx.Client.GetInteractivity();
