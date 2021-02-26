@@ -42,7 +42,7 @@ namespace Discord_Bot.Commands
         public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> cmds)
         {
             string mathcommands = "`add` `min` `mply` `div` `sqrt` `sin` `cos` `tan` `cot` `raise` `avg`";
-            string funcommands =  "`ping` `poll` `random`";
+            string funcommands =  "`ping` `emojipoll` `random`";
             string schedulecommands = "`8[letter]` `9[letter]` `sau` `sat` ";
             string url = "https://www.vippng.com/png/full/145-1451599_footer-footer-png.png";
 
