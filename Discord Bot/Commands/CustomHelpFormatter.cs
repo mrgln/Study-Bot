@@ -48,7 +48,7 @@ namespace Discord_Bot.Commands
 
             _embed.WithColor(DiscordColor.Aquamarine);
             _embed.WithImageUrl(url);
-            _embed.WithDescription("Для информации о каждой команде напишите *= help <название команды>*");
+            _embed.WithDescription("Для информации о каждой команде напишите *=help <название команды>*");
 
             _embed.WithTitle("Study Bot - simplifies the learning process");
             _embed.AddField("🖩 Math Commands", mathcommands);

@@ -1,20 +1,9 @@
-﻿using DSharpPlus;
-using DSharpPlus.CommandsNext;
-using DSharpPlus.EventArgs;
-using DSharpPlus.Interactivity;
-using Newtonsoft.Json;
+﻿using DSharpPlus.CommandsNext;
 using System;
-using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus.Entities;
-using DSharpPlus.Net;
-using Emzi0767.Utilities;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Microsoft.Extensions.Logging;
 using DSharpPlus.CommandsNext.Attributes;
-using Discord_Bot.Commands;
 using DSharpPlus.Interactivity.Extensions;
 using System.Linq;
 using DSharpPlus.Interactivity.Enums;
@@ -30,7 +19,7 @@ namespace Discord_Bot.Commands
         {
             Random random = new Random();
             int j = 1;
-            if(j == random.Next(0,3))
+            if(j == random.Next(0,4))
                 await ctx.Channel.SendMessageAsync("I've lost gg🏓").ConfigureAwait(false);
             else {await ctx.Channel.SendMessageAsync("pong 🏓").ConfigureAwait(false); }
         }
@@ -109,7 +98,7 @@ namespace Discord_Bot.Commands
 
         [Command("emojipoll"), Cooldown(2, 30, CooldownBucketType.Guild)]
         [Description("Голосование с результатами 'да' или 'нет'\n" +
-                     "pollemoji [время, например 10s] [тема или вопрос]")]
+                     "emojipoll [время, например 10s] [тема или вопрос]")]
 
         public async Task EmojiPollAsync(CommandContext commandContext, [Description("How long should the poll last. (e.g. 1m = 1 minute)")] TimeSpan duration, [Description("Poll question"), RemainingText] string question)
         {
