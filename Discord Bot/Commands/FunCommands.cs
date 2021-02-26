@@ -17,11 +17,13 @@ using DSharpPlus.CommandsNext.Attributes;
 using Discord_Bot.Commands;
 using DSharpPlus.Interactivity.Extensions;
 using System.Linq;
+using DSharpPlus.Interactivity.Enums;
 
 namespace Discord_Bot.Commands
 {
     public class FunCommands: BaseCommandModule
     {
+        private DiscordEmoji[] _pollEmojiCache;
 
         [Command("ping")]
         public async Task Ping(CommandContext ctx)
@@ -102,6 +104,70 @@ namespace Discord_Bot.Commands
         {
             var random = new Random();
             await ctx.RespondAsync($"`Your number is - {random.Next(x, y)}`");
+        }
+
+
+        [Command("emojipoll"), Cooldown(2, 30, CooldownBucketType.Guild)]
+        [Description("Голосование с результатами 'да' или 'нет'\n" +
+                     "pollemoji [время, например 10s] [тема или вопрос]")]
+
+        public async Task EmojiPollAsync(CommandContext commandContext, [Description("How long should the poll last. (e.g. 1m = 1 minute)")] TimeSpan duration, [Description("Poll question"), RemainingText] string question)
+        {
+            if (!string.IsNullOrEmpty(question))
+            {
+                var client = commandContext.Client;
+                var interactivity = client.GetInteractivity();
+                if (_pollEmojiCache == null)
+                {
+                    _pollEmojiCache = new[] {
+                        DiscordEmoji.FromName(client, ":white_check_mark:"),
+                        DiscordEmoji.FromName(client, ":x:")
+                    };
+                }
+
+                // Creating the poll message
+                var pollStartText = new StringBuilder();
+                pollStartText.Append("**").Append("Голосование:").AppendLine("**");
+                pollStartText.Append($"`{question}`");
+                var pollStartMessage = await commandContext.RespondAsync(pollStartText.ToString());
+
+                // DoPollAsync adds automatically emojis out from an emoji array to a special message and waits for the "duration" of time to calculate results.
+                var pollResult = await interactivity.DoPollAsync(pollStartMessage, _pollEmojiCache, PollBehaviour.DeleteEmojis, duration);
+                var yesVotes = pollResult[0].Total;
+                var noVotes = pollResult[1].Total;
+
+                // Printing out the result
+                var pollResultText = new StringBuilder();
+                pollResultText.AppendLine($"`{question}`");
+                pollResultText.Append("Результат голосования: ");
+                pollResultText.Append("**");
+                if (yesVotes > noVotes)
+                {
+                    pollResultText.Append("Да");
+                }
+                else if (yesVotes == noVotes)
+                {
+                    pollResultText.Append("Не решено");
+                }
+                else if(noVotes ==0 && yesVotes >=0)
+                {
+                    pollResultText.Append("Да");
+                }
+                else if (yesVotes == 0 && noVotes >= 0)
+                {
+                    pollResultText.Append("Нет");
+                }
+                else
+                {
+                    pollResultText.Append("Нет");
+                }
+                pollResultText.Append("**");
+                await commandContext.RespondAsync(pollResultText.ToString());
+            }
+            else
+            {
+                await commandContext.RespondAsync("Ошибка: вы не можете начать голосование без главного ворпоса или темы");
+            }
         }
     }
 }

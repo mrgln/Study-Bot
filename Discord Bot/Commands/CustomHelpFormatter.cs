@@ -55,7 +55,7 @@ namespace Discord_Bot.Commands
             _embed.AddField("📋 Schedule Commands", schedulecommands);
             _embed.AddField("🎲 Fun Commands", funcommands);
 
-            _embed.WithFooter("Type '= help <CommandName>' for details on command\nmade by mrgln ");
+            _embed.WithFooter("Type '=help <CommandName>' for details on command\nmade by mrgln ");
             return this;
         }
 
