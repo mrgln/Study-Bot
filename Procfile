@@ -1,1 +1,1 @@
-﻿worker: .net DiscordBot.sln
+﻿worker: .net DiscordBot.dll
