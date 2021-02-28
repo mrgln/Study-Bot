@@ -1,1 +1,1 @@
-﻿worker:  bundle exec rake jobs:work
+﻿worker:  node DiscordBot.sln
