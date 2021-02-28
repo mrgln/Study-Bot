@@ -1,1 +1,1 @@
-﻿worker:  node DiscordBot.sln
+﻿worker: .net DiscordBot.sln
