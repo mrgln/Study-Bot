@@ -1,1 +1,1 @@
-﻿worker: node Program.cs
+﻿worker: cd $HOME/heroku_output && ./DiscordBot
