@@ -88,7 +88,7 @@ namespace Discord_Bot.Commands
 
             Random randomm = new Random();
 
-            string[] meme = new string[6];
+            string[] meme = new string[15];
             meme[0] = "*хорошая работа олег, иди приляг отдохни*";
             meme[1] = "*:face_with_raised_eyebrow:*";
             meme[2] = "*бро, сегодня выходной, зачем тебе расписание...*";
