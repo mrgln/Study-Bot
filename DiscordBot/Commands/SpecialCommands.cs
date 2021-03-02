@@ -1,20 +1,7 @@
-﻿using DSharpPlus;
-using DSharpPlus.CommandsNext;
-using DSharpPlus.EventArgs;
-using DSharpPlus.Interactivity;
-using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Text;
+﻿using DSharpPlus.CommandsNext;
 using System.Threading.Tasks;
 using DSharpPlus.Entities;
-using DSharpPlus.Net;
-using Emzi0767.Utilities;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Microsoft.Extensions.Logging;
 using DSharpPlus.CommandsNext.Attributes;
-using Discord_Bot.Commands;
 using DSharpPlus.Interactivity.Extensions;
 
 namespace Discord_Bot.Commands
@@ -25,7 +12,6 @@ namespace Discord_Bot.Commands
         [Description("Shows schedule for Summative Assessment for the Unit")]
         public async Task SAU(CommandContext ctx)
         {
-
             var interactivity = ctx.Client.GetInteractivity();
             var message = await ctx.RespondAsync("`Choose grade. For example, 9`");
             var respond = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id ==ctx.User.Id).ConfigureAwait(false);
@@ -72,30 +58,25 @@ namespace Discord_Bot.Commands
         [Description("Shows schedule for Summative Assessment for the Term")]
         public async Task SAT(CommandContext ctx)
         {
-            var interactivity = ctx.Client.GetInteractivity();
-            //var message = await ctx.RespondAsync("`Choose grade. For example, 7`");
-            //var respond = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel).ConfigureAwait(false);
+            var client = ctx.Client;
+            var interactivity = client.GetInteractivity(); 
 
-            //if (respond.Result.Content == "9")
-            //{
-            //    var sauEmbed = new DiscordEmbedBuilder
-            //    {
-            //        Title = respond.Result.Content,
-            //        ImageUrl = "https://wmpics.pics/di-3QXL.png",
-            //    };
-            //    var sauMessage = await ctx.Channel.SendMessageAsync(embed: sauEmbed).ConfigureAwait(false);
-            //}
+            var sauEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Расписание СОЧ",
+                ImageUrl = "https://wmpics.pics/di-TQVVL.jpg",
+            };
 
-            //else
-            //{
-                var sauEmbed = new DiscordEmbedBuilder
-                {
-                    Description = "**Расписания сочей еще нет**",
-                };
-                var sauMessage = await ctx.Channel.SendMessageAsync(embed: sauEmbed).ConfigureAwait(false);
-            //}
+            var pollMessage = await ctx.Channel.SendMessageAsync(embed: sauEmbed).ConfigureAwait(false);
+
+            await pollMessage.CreateReactionAsync(DiscordEmoji.FromName(client, ":sob:")).ConfigureAwait(false);
+            await Task.Delay(120);
+            await pollMessage.CreateReactionAsync(DiscordEmoji.FromName(client, ":pensive:")).ConfigureAwait(false);
+            await Task.Delay(120);
+            await pollMessage.CreateReactionAsync(DiscordEmoji.FromName(client, ":neutral_face:")).ConfigureAwait(false);
+            await Task.Delay(120);
+            await pollMessage.CreateReactionAsync(DiscordEmoji.FromName(client, ":four_leaf_clover:")).ConfigureAwait(false);
         }
-
 
         [Command("9l")]
         [Description("Shows 9l's schedule for the week\n" +
@@ -135,52 +116,5 @@ namespace Discord_Bot.Commands
         {
             await ctx.Channel.SendMessageAsync("Пожалуйста введите день недели на английском. Например *nis 9l monday*").ConfigureAwait(false);
         }
-
-
-        [Command("9a")]
-        [Description("Shows 9a's schedule for the week\n" +
-                     "I.e. **nis 9a monday/tuesday/thursday/wednesday/thurdsay/friday**\n")]
-        public async Task Schedule9a(CommandContext ctx, string _string)
-        {
-            string scheduleAccordingToDay;
-
-            switch (_string)
-            {
-                case "monday":
-                    scheduleAccordingToDay = "`08:30 - 08:50   Казахский язык\n" + "09:00 - 09:20\n" + "09:30 - 09:50   Биология\n" +
-                                              "09:55 - 10:15   Биология\n" + "10:20 - 10:40   Математкиа\n" + "10:45 - 11:05   Математика\n" +
-                                              "11:20 - 11:40   Английский язык\n" + "11:45 - 12:05   Английский язык\n`";
-                    await ctx.Channel.SendMessageAsync(scheduleAccordingToDay).ConfigureAwait(false); break;
-                case "tuesday":
-                    scheduleAccordingToDay = "`08:30 - 08:50   Английский язык\n" + "09:00 - 09:20   Английский язык\n" + "09:30 - 09:50   География\n" +
-                                             "09:55 - 10:15   География\n" + "10:20 - 10:40   История Казахстана\n" + "10:45 - 11:05   История Казахстана\n" + "11:20 - 11:40   Физика\n" +
-                                             "11:45 - 12:05   Физика\n" + "13:15 - 13:35\n" + "13:45 - 14:05\n" + "14:15 - 14:35\n" + "14:40 - 15:00   Самопознание\n`";
-                    await ctx.Channel.SendMessageAsync(scheduleAccordingToDay).ConfigureAwait(false); break;
-                case "wednesday":
-                    scheduleAccordingToDay = "`08:30 - 08:50   Английский язык\n" + "09:00 - 09:20   Основы права\n" + "09:30 - 09:50   Математика\n" +
-                                             "09:55 - 10:15   Математика\n" + "10:20 - 10:40   Казахская литература\n" + "10:45 - 11:05   Казахская литература\n" + "11:20 - 11:40   Русский язык и литература\n" +
-                                             "11:45 - 12:05   Русский язык и литература\n" + "13:15 - 13:35   Искусство\n" + "13:45 - 14:05   Искусство\n`";
-                    await ctx.Channel.SendMessageAsync(scheduleAccordingToDay).ConfigureAwait(false); break;
-                case "thursday":
-                    scheduleAccordingToDay = "`08:30 - 08:50   Русский язык и литература\n" + "09:00 - 09:20   Русский язык и литература\n" + "09:30 - 09:50   Химия\n" + "09:55 - 10:15   Химия\n" + "10:20 - 10:40   Информатика\n" +
-                                              "10:45 - 11:05   Информатика\n" + "11:20 - 11:40   Физика\n" + "11:45 - 12:05   Физика\n`";
-                    await ctx.Channel.SendMessageAsync(scheduleAccordingToDay).ConfigureAwait(false); break;
-                case "friday":
-                    scheduleAccordingToDay = "`08:30 - 08:50   Биология\n" + "09:00 - 09:20\n" + "09:30 - 09:50   Казахский язык\n" + "09:55 - 10:15   Казахский язык\n" + "10:20 - 10:40   Математика\n" +
-                                               "10:45 - 11:05   Математика\n" + "11:20 - 11:40   Химия\n" + "11:45 - 12:05   Кураторский час\n" + "13:15 - 13:35\n" + "13:45 - 14:05\n" + "14:15 - 14:35   Физическая культура\n" + "14:40 - 15:00   Физическая культура\n`";
-                    await ctx.Channel.SendMessageAsync(scheduleAccordingToDay).ConfigureAwait(false); break;
-                default:
-                    scheduleAccordingToDay = "";
-                    await ctx.Channel.SendMessageAsync(scheduleAccordingToDay).ConfigureAwait(false);
-                    break;
-            }
-        }
-        [Command("9a")]
-        public async Task Schedule9a(CommandContext ctx)
-        {
-            await ctx.Channel.SendMessageAsync("Пожалуйста введите день недели на английском. Например *nis 9l monday*").ConfigureAwait(false);
-        }
     }
-        
-        //Нужно написать расписание всех остальных классов
 }
