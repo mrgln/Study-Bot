@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using DSharpPlus.Entities;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Interactivity.Extensions;
+using System;
 
 namespace Discord_Bot.Commands
 {
@@ -85,6 +86,24 @@ namespace Discord_Bot.Commands
         {
             string scheduleAccordingToDay;
 
+            Random randomm = new Random();
+
+            string[] meme = new string[6];
+            meme[0] = "*хорошая работа олег, иди приляг отдохни*";
+            meme[1] = "*:face_with_raised_eyebrow:*";
+            meme[2] = "*бро, сегодня выходной, зачем тебе расписание...*";
+            meme[3] = "*а вы тоже хотите узнать расписание уроков на выходных...*";
+            meme[4] = "*отличная работа михаил*";
+            meme[5] = "*вфполдажвылкщукшавдылаподкшоущаполавдыжлкопщшавызоклпдаолволафдопкшщпоалвдытапщкшуоашщпыокпдлавоыщкшпоалдыолдкопалвды ой простите мозг схватило*";
+            meme[6] = "*я вам запрещать ходить в туалет, он сейчас на ремонте*";
+            meme[7] = ":star2: *это звездочка удачи, сегодня тебе повезет*";
+            meme[8] = "*ура выходной* :partying_face:";
+            meme[9] = "*сейчас бы на стройку а не вот это все*:construction_site:";
+            meme[11] = ":champagne_glass:";
+            meme[12] = ":detective: *да да, у меня есть личные агенты а у тебя нет* :woman_detective:";
+            meme[13] = "*с новым годом* :christmas_tree:";
+            meme[14] = ":man_genie::-*привет я джин, загадывай что хочешь, только все равно ничего не получишь, я всего лишь дискорд эмоджи...*";
+
             switch (_string)
             {
                 case "monday":scheduleAccordingToDay = "`08:30 - 08:50   География\n" + "09:00 - 09:20   География\n" + "09:30 - 09:50   Казахский язык и литература\n" +
@@ -106,7 +125,9 @@ namespace Discord_Bot.Commands
                 case "friday": scheduleAccordingToDay = "`08:30 - 08:50\n" +"09:00 - 09:20\n" +"09:30 - 09:50   Английский язык\n" +"09:55 - 10:15   Английский язык\n" +"10:20 - 10:40   Русская литература\n" +
                                                           "10:45 - 11:05   Русская литература\n" +"11:20 - 11:40   Казахский язык и литература\n" +"11:45 - 12:05   Казахский язык и литература\n`";
                                                           await ctx.Channel.SendMessageAsync(scheduleAccordingToDay).ConfigureAwait(false); break;
-                default:scheduleAccordingToDay = "";
+                case "saturday": scheduleAccordingToDay = meme[randomm.Next(0, meme.Length)]; await ctx.Channel.SendMessageAsync(scheduleAccordingToDay).ConfigureAwait(false); break;
+                case "sunday": scheduleAccordingToDay = meme[randomm.Next(0, meme.Length)]; await ctx.Channel.SendMessageAsync(scheduleAccordingToDay).ConfigureAwait(false); break;
+                default: scheduleAccordingToDay = "";
                     await ctx.Channel.SendMessageAsync(scheduleAccordingToDay).ConfigureAwait(false);
                     break;
             }
