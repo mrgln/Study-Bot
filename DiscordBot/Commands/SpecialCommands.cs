@@ -79,6 +79,7 @@ namespace Discord_Bot.Commands
             await pollMessage.CreateReactionAsync(DiscordEmoji.FromName(client, ":four_leaf_clover:")).ConfigureAwait(false);
         }
 
+
         [Command("9l")]
         [Description("Shows 9l's schedule for the week\n" +
                      "I.e. **nis 9l monday/tuesday/thursday/wednesday/thurdsay/friday**\n")]
@@ -132,6 +133,8 @@ namespace Discord_Bot.Commands
                     break;
             }
         }
+
+
         [Command("9l")]
         public async Task Schedule9l(CommandContext ctx)
         {

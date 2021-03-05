@@ -1,22 +1,6 @@
-﻿using DSharpPlus;
-using DSharpPlus.CommandsNext;
-using DSharpPlus.EventArgs;
-using DSharpPlus.Interactivity;
-using Newtonsoft.Json;
-using System;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
-using DSharpPlus.Net;
-using Emzi0767.Utilities;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Microsoft.Extensions.Logging;
-using DSharpPlus.CommandsNext.Attributes;
-using Discord_Bot.Commands;
-using DSharpPlus.Interactivity.Extensions;
-using System.Linq;
 using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.CommandsNext.Entities;
 

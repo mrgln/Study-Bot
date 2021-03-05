@@ -52,7 +52,6 @@ namespace Discord_Bot.Commands
                     "= [duration] [Title for poll] [emoji] [emoji]...\n" +
                     "\n" +
                     "For example, *= 20s :pensive: :thumbsup: :champagne_glass:*\n" +
-                    //"!There should be a space between emojis\nМежду смайликами должен быть пробел" +
                     "**!На данный момент команда работает некорректно!**\n")]
         public async Task Poll(CommandContext ctx, TimeSpan duration, params DiscordEmoji[] EmojiOptions)
         {
@@ -99,7 +98,6 @@ namespace Discord_Bot.Commands
         [Command("emojipoll"), Cooldown(2, 30, CooldownBucketType.Guild)]
         [Description("Голосование с результатами 'да' или 'нет'\n" +
                      "emojipoll [время, например 10s] [тема или вопрос]")]
-
         public async Task EmojiPollAsync(CommandContext commandContext, [Description("How long should the poll last. (e.g. 1m = 1 minute)")] TimeSpan duration, [Description("Poll question"), RemainingText] string question)
         {
             if (!string.IsNullOrEmpty(question))
@@ -157,6 +155,13 @@ namespace Discord_Bot.Commands
             {
                 await commandContext.RespondAsync("Ошибка: вы не можете начать голосование без главного ворпоса или темы");
             }
+        }
+
+        [Command("fight")]
+        [Description("")]
+        public async Task FightAsync(CommandContext commandContext)
+        {
+
         }
     }
 }
