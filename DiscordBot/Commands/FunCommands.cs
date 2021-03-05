@@ -159,9 +159,20 @@ namespace Discord_Bot.Commands
 
         [Command("fight")]
         [Description("")]
-        public async Task FightAsync(CommandContext commandContext)
+        public async Task FightAsync(CommandContext ctx)
         {
+            var interactivity = ctx.Client.GetInteractivity();
 
+            await ctx.RespondAsync("`У тебя есть три попытки чтобы угадать число от 1 до 100, выиграешь - получишь роль 'ванга'`");
+
+            var random = new Random();
+
+            var respond = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
+
+            if (int.Parse(respond.Result.Content) == random.Next(1, 100))
+            {
+                //...
+            }
         }
     }
 }
