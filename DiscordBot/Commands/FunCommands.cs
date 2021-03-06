@@ -186,7 +186,7 @@ namespace Discord_Bot.Commands
                 if (respond2.Result.Content == chislo.ToString())
                 {
                     await ctx.RespondAsync("`Ура ты обладаешь силами ванги, поздравляю!`:partying_face:");
-                    var role = ctx.Guild.GetRole(817819177876062229);
+                    var role = ctx.Guild.GetRole(817829493929803776);
                     await ctx.Member.GrantRoleAsync(role);
                 }
                 else
