@@ -157,21 +157,55 @@ namespace Discord_Bot.Commands
             }
         }
 
-        [Command("fight")]
-        [Description("")]
+        [Command("guess")]
+        [Description("Проверяет твои внутренние силы и способности предсказывания")]
         public async Task FightAsync(CommandContext ctx)
         {
             var interactivity = ctx.Client.GetInteractivity();
 
-            await ctx.RespondAsync("`У тебя есть три попытки чтобы угадать число от 1 до 100, выиграешь - получишь роль 'ванга'`");
+            await ctx.RespondAsync("`У тебя есть три попытки чтобы угадать число от 1 до 500, выиграешь - получишь роль 'ванга'`");
 
             var random = new Random();
 
             var respond = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
 
-            if (int.Parse(respond.Result.Content) == random.Next(1, 100))
+            var chislo = random.Next(0, 500);
+
+            if (respond.Result.Content == chislo.ToString())
             {
-                //...
+                await ctx.RespondAsync("`Ура ты обладаешь силами ванги, поздравляю!`:partying_face:");
+                var role = ctx.Guild.GetRole(817819177876062229);
+                await ctx.Member.GrantRoleAsync(role);
+            }
+            else 
+            { 
+                await ctx.RespondAsync("`неа, попробуй еще раз`");
+
+                var respond2 = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
+
+                if (respond2.Result.Content == chislo.ToString())
+                {
+                    await ctx.RespondAsync("`Ура ты обладаешь силами ванги, поздравляю!`:partying_face:");
+                    var role = ctx.Guild.GetRole(817819177876062229);
+                    await ctx.Member.GrantRoleAsync(role);
+                }
+                else
+                {
+                    await ctx.RespondAsync("`неа, попробуй еще раз`");
+
+                    var respond3 = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
+
+                    if (respond3.Result.Content == chislo.ToString())
+                    {
+                        await ctx.RespondAsync("`Ура ты обладаешь силами ванги, поздравляю!`:partying_face:");
+                        var role = ctx.Guild.GetRole(817819177876062229);
+                        await ctx.Member.GrantRoleAsync(role);
+                    }
+                    else
+                    {
+                        await ctx.RespondAsync("`Не расстраивайся, ты еще сможешь угадать`:wink:");
+                    }
+                }
             }
         }
     }
