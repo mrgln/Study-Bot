@@ -157,6 +157,7 @@ namespace Discord_Bot.Commands
             }
         }
 
+
         [Command("guess")]
         [Description("Проверяет твои внутренние силы и способности предсказывания")]
         public async Task FightAsync(CommandContext ctx)
@@ -167,28 +168,31 @@ namespace Discord_Bot.Commands
 
             var random = new Random();
 
-            var respond = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
+            var chislo = random.Next(1, 500);
 
-            var chislo = random.Next(0, 500);
+            var respond = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
 
             int answer = int.Parse(respond.Result.Content);
 
-            if (respond.Result.Content == chislo.ToString())
+            if (answer == chislo)
             {
                 await ctx.RespondAsync("`Ура ты обладаешь силами ванги, поздравляю!`:partying_face:");
-                var role = ctx.Guild.GetRole(817819177876062229);
+                var role = ctx.Guild.GetRole(817829493929803776);
                 await ctx.Member.GrantRoleAsync(role);
             }
 
             else 
-            {   if (answer < chislo)
+            {  
+                if (answer < chislo)
                     await ctx.RespondAsync("`мало`");
                 else if(answer > chislo)
                     await ctx.RespondAsync("`много`");
 
                 var respond2 = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
 
-                if (respond2.Result.Content == chislo.ToString())
+                int answer2 = int.Parse(respond2.Result.Content);
+
+                if (answer2==chislo)
                 {
                     await ctx.RespondAsync("`Ура ты обладаешь силами ванги, поздравляю!`:partying_face:");
                     var role = ctx.Guild.GetRole(817829493929803776);
@@ -196,17 +200,19 @@ namespace Discord_Bot.Commands
                 }
                 else
                 {
-                    if (answer < chislo)
+                    if (answer2 < chislo)
                         await ctx.RespondAsync("`мало`");
-                    else if(answer>chislo)
+                    else if(answer2>chislo)
                         await ctx.RespondAsync("`много`");
 
                     var respond3 = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
 
-                    if (respond3.Result.Content == chislo.ToString())
+                    int answer3 = int.Parse(respond3.Result.Content);
+
+                    if (answer3==chislo)
                     {
                         await ctx.RespondAsync("`Ура ты обладаешь силами ванги, поздравляю!`:partying_face:");
-                        var role = ctx.Guild.GetRole(817819177876062229);
+                        var role = ctx.Guild.GetRole(817829493929803776);
                         await ctx.Member.GrantRoleAsync(role);
                     }
                     else
