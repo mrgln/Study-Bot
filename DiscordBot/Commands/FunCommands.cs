@@ -164,11 +164,11 @@ namespace Discord_Bot.Commands
         {
             var interactivity = ctx.Client.GetInteractivity();
 
-            await ctx.RespondAsync("`У тебя есть три попытки чтобы угадать число от 1 до 500, выиграешь - получишь роль 'ванга' и будешь находиться отдельно среди списка участников сервера`\nНапиши число:");
+            await ctx.RespondAsync("`У тебя есть пять попыток чтобы угадать число от 1 до 500, выиграешь - получишь роль 'пророк' и будешь находиться отдельно среди списка участников сервера`\nНапиши число:");
 
             var random = new Random();
 
-            var chislo = random.Next(1, 500);
+            var chislo = random.Next(1, 499);
 
             var respond = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
 
@@ -182,11 +182,14 @@ namespace Discord_Bot.Commands
             }
 
             else 
-            {  
+            {
                 if (answer < chislo)
                     await ctx.RespondAsync("`мало`");
-                else if(answer > chislo)
+                else if (answer >= 500)
+                    await ctx.RespondAsync("`Число находится за пределами допустимых ответов`");
+                else if (answer > chislo)
                     await ctx.RespondAsync("`много`");
+
 
                 var respond2 = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
 
@@ -202,8 +205,11 @@ namespace Discord_Bot.Commands
                 {
                     if (answer2 < chislo)
                         await ctx.RespondAsync("`мало`");
+                    else if (answer2 >= 500)
+                        await ctx.RespondAsync("`Число находится за пределами допустимых ответов`");
                     else if(answer2>chislo)
                         await ctx.RespondAsync("`много`");
+                  
 
                     var respond3 = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
 
@@ -217,7 +223,49 @@ namespace Discord_Bot.Commands
                     }
                     else
                     {
-                        await ctx.RespondAsync("`Не расстраивайся, ты еще сможешь угадать`:wink:");
+                        if (answer3 < chislo)
+                            await ctx.RespondAsync("`мало`");
+                        else if (answer3 >= 500)
+                            await ctx.RespondAsync("`Число находится за пределами допустимых ответов`");
+                        else if (answer3 > chislo)
+                            await ctx.RespondAsync("`много`");
+
+                        var respond4 = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
+
+                        int answer4 = int.Parse(respond4.Result.Content);
+
+                        if (answer4 == chislo)
+                        {
+                            await ctx.RespondAsync("`Ура ты обладаешь силами ванги, поздравляю!`:partying_face:");
+                            var role = ctx.Guild.GetRole(817829493929803776);
+                            await ctx.Member.GrantRoleAsync(role);
+                        }
+                        else
+                        {
+                            if (answer4 < chislo)
+                                await ctx.RespondAsync("`мало`");
+                            else if (answer4 >= 500)
+                                await ctx.RespondAsync("`Число находится за пределами допустимых ответов`");
+                            else if (answer4 > chislo)
+                                await ctx.RespondAsync("`много`");
+
+
+                            var respond5 = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id == ctx.User.Id).ConfigureAwait(false);
+
+                            int answer5 = int.Parse(respond5.Result.Content);
+
+                            if (answer5 == chislo)
+                            {
+                                await ctx.RespondAsync("`Ура ты обладаешь силами ванги, поздравляю!`:partying_face:");
+                                var role = ctx.Guild.GetRole(817829493929803776);
+                                await ctx.Member.GrantRoleAsync(role);
+                            }
+                            else
+                            {
+                                await ctx.RespondAsync($"`Число -> {chislo}`");
+                                await ctx.RespondAsync("`Не расстраивайся, ты еще сможешь угадать`:wink:");
+                            }
+                        }
                     }
                 }
             }
