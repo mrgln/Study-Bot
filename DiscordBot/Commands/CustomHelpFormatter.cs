@@ -17,7 +17,7 @@ namespace Discord_Bot.Commands
 
         public override BaseHelpFormatter WithCommand(Command command)
         {
-            _embed.WithColor(DiscordColor.Aquamarine);
+            _embed.WithColor(DiscordColor.Green);
             _embed.AddField(command.Name, command.Description);
 
             return this;
