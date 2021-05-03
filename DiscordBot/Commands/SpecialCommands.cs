@@ -18,11 +18,12 @@ namespace Discord_Bot.Commands
             var respond = await interactivity.WaitForMessageAsync(x => x.Channel == ctx.Channel && x.Author.Id ==ctx.User.Id).ConfigureAwait(false);
             
             if(respond.Result.Content == "9")
-            { 
+            {
                 var sauEmbed = new DiscordEmbedBuilder
                 {
-                Title = $"Расписание соров для {respond.Result.Content} класса",
-                ImageUrl = "https://wmpics.pics/di-3QXL.png",
+                    Title = $"Расписание соров для {respond.Result.Content} класса",
+                    //ImageUrl = "https://wmpics.pics/di-3QXL.png",
+                    ImageUrl = "https://wmpics.pics/di-PPUG.png",
                 };
                 var sauMessage = await ctx.Channel.SendMessageAsync(embed: sauEmbed).ConfigureAwait(false);
             }
@@ -31,7 +32,7 @@ namespace Discord_Bot.Commands
                 var sauEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Расписание соров для {respond.Result.Content} класса",
-                    ImageUrl = "https://cdn1.savepice.ru/uploads/2021/2/24/9e888d852442e9004a2889b69f93dd92-full.png",
+                    //ImageUrl = "https://cdn1.savepice.ru/uploads/2021/2/24/9e888d852442e9004a2889b69f93dd92-full.png",
                 };
                 var sauMessage = await ctx.Channel.SendMessageAsync(embed: sauEmbed).ConfigureAwait(false);
             }
@@ -40,7 +41,7 @@ namespace Discord_Bot.Commands
                 var sauEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Расписание соров для {respond.Result.Content} класса",
-                    ImageUrl = "https://wmpics.pics/di-GXFY.png",
+                    //ImageUrl = "https://wmpics.pics/di-GXFY.png",
                 };
                 var sauMessage = await ctx.Channel.SendMessageAsync(embed: sauEmbed).ConfigureAwait(false);
             }
@@ -60,12 +61,11 @@ namespace Discord_Bot.Commands
         public async Task SAT(CommandContext ctx)
         {
             var client = ctx.Client;
-            var interactivity = client.GetInteractivity(); 
 
             var sauEmbed = new DiscordEmbedBuilder
             {
                 Title = "Расписание СОЧ",
-                ImageUrl = "https://wmpics.pics/di-TQVVL.jpg",
+                ImageUrl = "https://wmpics.pics/di-OOZZ.png",
             };
 
             var pollMessage = await ctx.Channel.SendMessageAsync(embed: sauEmbed).ConfigureAwait(false);
